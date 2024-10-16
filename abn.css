@@ -1,0 +1,82 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:"メイリオ", "Meiryo","ＭＳ ゴシック","Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3",sans-serif; 
+  margin: 0;
+  padding: 0;
+	user-select:none;
+	-webkit-user-select:none;	// Google Chrome、Safari
+	-webkit-user-drag:none;
+	-moz-user-select:none;	// Firefox
+	-khtml-user-select:none;
+	-khtml-user-drag:none;
+   overflow: hidden;
+}
+
+a {
+  text-decoration: none; font-weight: bold;
+}
+
+.roading {
+  position: fixed;
+  background: #000040;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  transition: 0.4s;
+  z-index: 100;
+}
+.road_h {
+  position: fixed;
+  background: #4444bb;
+  width: 50%;
+  height: 10px;
+  top: 70%;
+  left: 25%;
+  z-index: 101;
+  transition: 0.1s;
+}
+.road_g {
+  position: fixed;
+  background: #0000ff;
+  width: 0%;
+  height: 10px;
+  top: 70%;
+  left: 25%;
+  transition: 0.3s;
+  z-index: 102;
+}
+
+.header {
+  background-image: url("_header.jpg");
+  width: 100%;
+  font-weight: bold;
+  color: #ffffff;
+  height: 25px;
+  transition: 0.3s;
+  font-size: 20px;
+  border-bottom: 2px solid #000050;
+}
+.logo {
+height: 25px;
+margin: 0;
+}
+.hontai {
+  position: absolute;
+  background: #4c676b;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+.canvas_layer {
+  position: relative;
+}
+.canvas_layer canvas {
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  border: 1px solid #000000;
+}
