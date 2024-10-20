@@ -422,8 +422,12 @@ cls(1);
 	} else {
 	bg1f.fillRect(0, 400, 1000, 200);
 	};
-	if (mainop_counter > 700) {
-	bg1f.fillRect(0, 0, (mainop_counter - 700) * 10, 400);
+	if (mainop_counter > 750) {
+	bg1f.fillRect(0, 0, (mainop_counter - 750) * 10, 400);
+		if (mainop_counter > 850) {
+		cls(1);
+		condition = 5;
+		};
 	};
 	op_mas2("うわああああああ！！！！！！！！！！（絶叫）", 100);
 	op_mas2("あああああ・・・（絶望）", 350);
