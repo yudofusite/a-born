@@ -360,7 +360,6 @@ function start_option() {
 			st_op_cu = 1;
 			keydown = 0;
 			opening_counter = 50;
-			se00.resume();
 			};
 		};
 		if (keydown == 0) {
@@ -428,6 +427,8 @@ cls(1);
 	op_mas2("（爆発音）", 600);
 	if (mainop_counter == 600) {
 	se01.play();
+	console.log(se00);
+	console.log(se01);
 	};
 mainop_counter++;
 };
@@ -482,6 +483,7 @@ let enter = 0;
 
 addEventListener("keydown",function(kq) {
 keydown = 1;
+resume_func();
 	if (kq.key == "ArrowUp") {
 	al_u = 1;
 	};
@@ -516,3 +518,11 @@ keydown = 0;
 	enter = 0;
 	};
 });
+
+let rf = 0;
+function resume_func() {
+	if (rf == 0) {
+	rf = 1;
+	se00.resume();
+	};
+};
