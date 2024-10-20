@@ -434,7 +434,10 @@ cls(1);
 	};
 	if (mainop_counter > 80 || mainop_counter < 400) {
 	bg1f.fillStyle = "#ffffff";
-	bg1f.fillRect(1000 - ((mainop_counter - 80) * 2.5), mainop_counter * 0.6, 2, 2)
+	bg1f.fillRect(1000 - ((mainop_counter - 80) * 2.5), mainop_counter * 0.6, 2, 2);
+		if (mainop_counter % 3 == 0) {
+		bg1f.fillRect(1000 - ((mainop_counter - 82) * 2.5), (mainop_counter - 2) * 0.6, 2, 2);
+		};
 	};
 	op_mas2("うわああああああ！！！！！！！！！！（絶叫）", 100);
 	op_mas2("あああああ・・・（絶望）", 350);

@@ -27,8 +27,16 @@
   </div>
 </div>
 
-
 <script src="main.js"></script>
+
+<script>
+let logof = document.getElementById("logo");
+let logo_rot = 0;
+setInterval(function() {
+logof.style.transform = "rotate(" + logo_rot + "deg)";
+logo_rot += 20;
+},200);
+</script>
 
 <noscript>
 <p>Javascript無効？はっきりわかんだね</p>
