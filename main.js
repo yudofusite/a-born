@@ -360,6 +360,7 @@ function start_option() {
 			st_op_cu = 1;
 			keydown = 0;
 			opening_counter = 50;
+			se00.resume();
 			};
 		};
 		if (keydown == 0) {
@@ -425,6 +426,9 @@ cls(1);
 	op_mas2("うわああああああ！！！！！！！！！！（絶叫）", 100);
 	op_mas2("あああああ・・・（絶望）", 350);
 	op_mas2("（爆発音）", 600);
+	if (mainop_counter == 600) {
+	se01.play();
+	};
 mainop_counter++;
 };
 
