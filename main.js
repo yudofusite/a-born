@@ -422,13 +422,14 @@ cls(1);
 	} else {
 	bg1f.fillRect(0, 400, 1000, 200);
 	};
+	if (mainop_counter > 700) {
+	bg1f.fillRect(0, 0, (mainop_counter - 700) * 10, 400);
+	};
 	op_mas2("うわああああああ！！！！！！！！！！（絶叫）", 100);
 	op_mas2("あああああ・・・（絶望）", 350);
 	op_mas2("（爆発音）", 600);
 	if (mainop_counter == 600) {
 	se01.play();
-	console.log(se00);
-	console.log(se01);
 	};
 mainop_counter++;
 };
