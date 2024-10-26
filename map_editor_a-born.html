@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html lang="jp">
+
+<head>
+<link rel="icon" href="favicon.ico" id="favicon">
+  <meta charset="UTF-8" />
+  <title>map editor a-born</title>
+  <style>
+    @import"abn_e.css";
+  </style>
+</head>
+<body oncontextmenu="return false;">
+<p class="title">MAPデータ生成ツール</p>
+<div class="waku1">
+<label>縦<input type="range" min="0" max="84" value="0" id="tates"></label><span id="tate">0</span><br>
+<label>横<input type="range" min="1" max="13" value="1" id="yokos"></label><span id="yoko">1</span><br>
+<span id="map_num_info">0</span>
+</div>
+<div class="nmapin">
+<canvas id="c1" class="canvas1"></canvas>
+</div>
+<hr>
+<canvas id="main" class="editor"></canvas>
+<button id="cls">消去</button>
+<button id="edtb">描画</button><br>
+<input type="text" value="-" readonly id="prev_d">
+<img src="bl1.png" id="swb" class="swb">
+<script>
+let tate_i = document.getElementById("tate");
+let yoko_i = document.getElementById("yoko");
+let tate = document.getElementById("tates");
+let yoko = document.getElementById("yokos");
+let mni = document.getElementById("map_num_info");
+let tate_n = yoko.value;
+let yoko_n = tate.value;
+let nmip = (yoko_n - 1) * 85 + tate_n;
+
+setInterval(function() {
+tate_i.textContent = tate.value;
+yoko_i.textContent = yoko.value;
+tate_n = Number(tate.value);
+yoko_n = Number(yoko.value);
+nmip = (yoko_n - 1) * 85 + tate_n;
+mni.textContent = nmip;
+},17);
+
+let c1 = document.getElementById("c1");
+c1.setAttribute("width","860px");
+c1.setAttribute("height","140px");
+let c1f =c1.getContext("2d");
+
+let plvd = document.getElementById("prev_d");
+
+setInterval(function() {
+plvd.value = mapdate[nmip];
+c1f.clearRect(0, 0, 1000, 500);
+c1f.fillStyle = "#bbbbbb";
+	for (let ie = 0; ie < 13; ie++) {
+		for (let ie1 = 0; ie1 <= 84; ie1++) {
+		c1f.fillRect(ie1 * 8, ie * 8, 6, 6);
+		};
+	};
+c1f.fillStyle = "#0000ff";
+c1f.fillRect(tate_n * 8, (yoko_n - 1) * 8, 6, 6);
+},17);
+
+
+//----------------editor----------------
+
+let cls_but = document.getElementById("cls");
+cls_but.addEventListener("click",function() {
+mapdate[nmip] = ["-"];
+console.log(mapdate);
+});
+let edtb = document.getElementById("edtb");
+edtb.addEventListener("click",function() {
+mapdate[nmip] = [];
+	for (let ipush = 0; ipush < 1250; ipush++) {
+	mapdate[nmip].push(0);
+	console.log(mapdate);
+	};
+});
+
+let mapdate = [];
+for (let md1 = 0; md1 < 1105; md1++) {
+mapdate.push(["-"]);
+};
+
+let main = document.getElementById("main");
+main.setAttribute("width","1000px");
+main.setAttribute("height","500px");
+let mainf = main.getContext("2d"); 
+let edit_you = 0;
+
+let offsetx = 0;
+let offsety = 0;
+main.onmousemove = function(mevent) {
+offsetx = mevent.offsetX * 1.25;
+offsety = mevent.offsetY * 1.25;
+};
+
+let hante_xy = 0;
+let hante_x = 0;
+let hante_y = 0;
+
+//switch-------------------------
+
+let s_button = document.getElementById("swb");
+let dentatsu = 1;
+swb.addEventListener("click",function() {
+dentatsu++;
+swb.src = "bl" + dentatsu + ".png";
+});
+swb.addEventListener("contextmenu",function() {
+dentatsu--;
+swb.src = "bl" + dentatsu + ".png";
+});
+let hante_nm = 0;
+
+setInterval(function() {
+mainf.clearRect(0, 0, 1000, 500);
+if (mapdate[nmip] == "-")  {
+	for (let ie2 = 0; ie2 < 25; ie2++) {
+		for (let ie3 = 0; ie3 < 50; ie3++) {
+		mainf.fillStyle = "#eeeeee";
+		mainf.fillRect(ie3 * 20, ie2 * 20, 18, 18);
+		};
+	};
+} else {
+edit_you = 0;
+	for (let ie4 = 0; ie4 < 25; ie4++) {
+		for (let ie5 = 0; ie5 < 50; ie5++) {
+			if (mapdate[nmip][edit_you] == 0) {
+			mainf.fillStyle = "#aaaaaa";
+			mainf.fillRect(ie5 * 20, ie4 * 20, 18, 18);
+			};
+			if (mapdate[nmip][edit_you] == 1) {
+			mainf.drawImage(bl1, ie5 * 20, ie4 * 20, 20, 20);
+			};
+			if (mapdate[nmip][edit_you] == 2) {
+			mainf.drawImage(bl2, ie5 * 20, ie4 * 20, 20, 20);
+			};
+			if (mapdate[nmip][edit_you] == 3) {
+			mainf.drawImage(bl3, ie5 * 20, ie4 * 20, 20, 20);
+			};
+			if (mapdate[nmip][edit_you] == 4) {
+			mainf.drawImage(bl4, ie5 * 20, ie4 * 20, 20, 20);
+			};
+			if (mapdate[nmip][edit_you] == 5) {
+			mainf.drawImage(bl5, ie5 * 20, ie4 * 20, 20, 20);
+			};
+
+		edit_you++;
+		};
+	};
+};
+
+hante_x = 0;
+hante_y = 0;
+hante_xy = 0;
+	for (let ie6 = 0; ie6 < 25; ie6++) {		//マウス判定
+		for (let ie7 = 0; ie7 < 50; ie7++) {
+			if (hante_x < offsetx && hante_x + 20 > offsetx && hante_y < offsety && hante_y + 20 > offsety && mouse_d == 1) {
+			mapdate[nmip][hante_xy] = dentatsu;
+			};
+			if (hante_x < offsetx && hante_x + 20 > offsetx && hante_y < offsety && hante_y + 20 > offsety && mouse_d2 == 1) {
+			mapdate[nmip][hante_xy] = 0;
+			console.log("shift 0");
+			};
+		hante_x += 20;
+		hante_xy ++;
+		};
+	hante_x = 0;
+	hante_y += 20;
+	};
+
+mainf.fillStyle = "#000000";
+mainf.fillRect(offsetx, offsety, 4, 4);
+
+},1000 / 60);
+
+let mouse_d = 0;
+let mouse_d2 = 0;
+let shift_d = 0;
+main.addEventListener("mousedown",function(ck) {		//クリック判定大元
+if (shift_d == 1) {
+mouse_d2 = 1;
+console.log("shift");
+} else {
+mouse_d = 1;
+};
+});
+
+addEventListener("mouseup",function(ck) {
+mouse_d2 = 0;
+mouse_d = 0;
+});
+
+
+addEventListener("keydown",function(ae) {
+	if (ae.key == "ArrowRight") {
+	tate.value = tate_n + 1;
+	tate_n = tate.value;
+	}; 
+	if (ae.key == "ArrowLeft") {
+	tate.value = tate_n - 1;
+	tate_n = tate.value;
+	};
+	if (ae.key == "ArrowUp") {
+	yoko.value = yoko_n - 1;
+	yoko_n = yoko.value;
+	}; 
+	if (ae.key == "ArrowDown") {
+	yoko.value = yoko_n + 1;
+	yoko_n = yoko.value;
+	};  
+	if (ae.shiftKey) {
+	shift_d = 1;
+	};
+});
+
+addEventListener("keyup",function() {
+shift_d = 0;
+});
+
+//img loading
+let bl1 = new Image();
+bl1.src = "bl1.png";
+let bl2 = new Image();
+bl2.src = "bl2.png";
+let bl3 = new Image();
+bl3.src = "bl3.png";
+let bl4 = new Image();
+bl4.src = "bl4.png";
+let bl5 = new Image();
+bl5.src = "bl5.png";
+</script>
+
+</body>
+</html>
