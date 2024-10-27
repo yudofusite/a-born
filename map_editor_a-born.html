@@ -26,6 +26,8 @@
 <input type="text" value="-" readonly id="prev_d">
 <img src="bl1.png" id="swb" class="swb">
 <script>
+"use strict";
+
 let tate_i = document.getElementById("tate");
 let yoko_i = document.getElementById("yoko");
 let tate = document.getElementById("tates");
@@ -75,10 +77,11 @@ console.log(mapdate);
 let edtb = document.getElementById("edtb");
 edtb.addEventListener("click",function() {
 mapdate[nmip] = [];
+	console.log("s0");
 	for (let ipush = 0; ipush < 1250; ipush++) {
 	mapdate[nmip].push(0);
-	console.log(mapdate);
 	};
+	console.log("00");
 });
 
 let mapdate = [];
@@ -130,6 +133,17 @@ if (mapdate[nmip] == "-")  {
 edit_you = 0;
 	for (let ie4 = 0; ie4 < 25; ie4++) {
 		for (let ie5 = 0; ie5 < 50; ie5++) {
+
+
+
+			if (mapdate[nmip][edit_you] == 100) {			//画像反転機構
+			mainf.save();
+			mainf.translate(20, 0);
+			mainf.transform = "scale(-1 , 1)";
+			edit_you++;
+			mainf.restore();
+			};
+
 			if (mapdate[nmip][edit_you] == 0) {
 			mainf.fillStyle = "#aaaaaa";
 			mainf.fillRect(ie5 * 20, ie4 * 20, 18, 18);
@@ -144,7 +158,11 @@ edit_you = 0;
 			mainf.drawImage(bl3, ie5 * 20, ie4 * 20, 20, 20);
 			};
 			if (mapdate[nmip][edit_you] == 4) {
+			mainf.save();
+			mainf.translate(ie5 * 40 + 20, 0);
+			mainf.scale(-1 , 1);
 			mainf.drawImage(bl4, ie5 * 20, ie4 * 20, 20, 20);
+			mainf.restore();
 			};
 			if (mapdate[nmip][edit_you] == 5) {
 			mainf.drawImage(bl5, ie5 * 20, ie4 * 20, 20, 20);
@@ -177,7 +195,7 @@ hante_xy = 0;
 mainf.fillStyle = "#000000";
 mainf.fillRect(offsetx, offsety, 4, 4);
 
-},1000 / 60);
+},1000 / 20);
 
 let mouse_d = 0;
 let mouse_d2 = 0;
