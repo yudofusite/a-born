@@ -25,6 +25,7 @@
 <button id="edtb">描画</button><br>
 <input type="text" value="-" readonly id="prev_d">
 <img src="bl1.png" id="swb" class="swb">
+<input type="text" id="command" class="comm">
 <script>
 "use strict";
 
@@ -134,39 +135,21 @@ edit_you = 0;
 	for (let ie4 = 0; ie4 < 25; ie4++) {
 		for (let ie5 = 0; ie5 < 50; ie5++) {
 
-
-
-			if (mapdate[nmip][edit_you] == 100) {			//画像反転機構
-			mainf.save();
-			mainf.translate(20, 0);
-			mainf.transform = "scale(-1 , 1)";
-			edit_you++;
-			mainf.restore();
-			};
-
 			if (mapdate[nmip][edit_you] == 0) {
 			mainf.fillStyle = "#aaaaaa";
 			mainf.fillRect(ie5 * 20, ie4 * 20, 18, 18);
+			} else {
+				if (mapdate[nmip][edit_you][0] == "X") {		//左右反転
+				mainf.save();
+				mainf.translate(ie5 * 40 + 20, 0);
+				mainf.scale(-1 , 1);
+				block_edit(mapdate[nmip][edit_you][1],  ie5, ie4);
+				mainf.restore();
+				} else {
+				block_edit(mapdate[nmip][edit_you], ie5, ie4);
+				};
 			};
-			if (mapdate[nmip][edit_you] == 1) {
-			mainf.drawImage(bl1, ie5 * 20, ie4 * 20, 20, 20);
-			};
-			if (mapdate[nmip][edit_you] == 2) {
-			mainf.drawImage(bl2, ie5 * 20, ie4 * 20, 20, 20);
-			};
-			if (mapdate[nmip][edit_you] == 3) {
-			mainf.drawImage(bl3, ie5 * 20, ie4 * 20, 20, 20);
-			};
-			if (mapdate[nmip][edit_you] == 4) {
-			mainf.save();
-			mainf.translate(ie5 * 40 + 20, 0);
-			mainf.scale(-1 , 1);
-			mainf.drawImage(bl4, ie5 * 20, ie4 * 20, 20, 20);
-			mainf.restore();
-			};
-			if (mapdate[nmip][edit_you] == 5) {
-			mainf.drawImage(bl5, ie5 * 20, ie4 * 20, 20, 20);
-			};
+
 
 		edit_you++;
 		};
@@ -179,7 +162,11 @@ hante_xy = 0;
 	for (let ie6 = 0; ie6 < 25; ie6++) {		//マウス判定
 		for (let ie7 = 0; ie7 < 50; ie7++) {
 			if (hante_x < offsetx && hante_x + 20 > offsetx && hante_y < offsety && hante_y + 20 > offsety && mouse_d == 1) {
-			mapdate[nmip][hante_xy] = dentatsu;
+				if (com == "") {
+				mapdate[nmip][hante_xy] = dentatsu;
+				} else if (com == "x" || com == "X") {
+				mapdate[nmip][hante_xy] = "X" + dentatsu;
+				};
 			};
 			if (hante_x < offsetx && hante_x + 20 > offsetx && hante_y < offsety && hante_y + 20 > offsety && mouse_d2 == 1) {
 			mapdate[nmip][hante_xy] = 0;
@@ -195,7 +182,7 @@ hante_xy = 0;
 mainf.fillStyle = "#000000";
 mainf.fillRect(offsetx, offsety, 4, 4);
 
-},1000 / 20);
+},1000 / 60);
 
 let mouse_d = 0;
 let mouse_d2 = 0;
@@ -239,6 +226,46 @@ addEventListener("keydown",function(ae) {
 
 addEventListener("keyup",function() {
 shift_d = 0;
+com = document.getElementById("command").value;		//コマンド
+});
+
+function block_edit(blknum, bex, bey) {
+			if (blknum == 1) {
+			mainf.drawImage(bl1, bex * 20, bey * 20, 20, 20);
+			};
+			if (blknum == 2) {
+			mainf.drawImage(bl2, bex * 20, bey * 20, 20, 20);
+			};
+			if (blknum == 3) {
+			mainf.drawImage(bl3, bex * 20, bey * 20, 20, 20);
+			};
+			if (blknum == 4) {
+			mainf.drawImage(bl4, bex * 20, bey * 20, 20, 20);
+			};
+			if (blknum == 5) {
+			mainf.drawImage(bl5, bex * 20, bey * 20, 20, 20);
+			};
+			if (blknum == 6) {
+			mainf.drawImage(bl6, bex * 20, bey * 20, 20, 20);
+			};
+			if (blknum == 7) {
+			mainf.drawImage(bl7, bex * 20, bey * 20, 20, 20);
+			};
+};
+
+let com = document.getElementById("command").value;
+
+addEventListener("keyup",function(xyk) {
+if (xyk.key == "x") {
+	if (com != "x" || com != "X") {
+	com = "x";
+	document.getElementById("command").value = "x";
+	};
+}	
+if (xyk.key == "c" || xyk.key == "C" && com != "") {
+	com = "";
+	document.getElementById("command").value = "";
+	};
 });
 
 //img loading
@@ -252,6 +279,10 @@ let bl4 = new Image();
 bl4.src = "bl4.png";
 let bl5 = new Image();
 bl5.src = "bl5.png";
+let bl6 = new Image();
+bl6.src = "bl6.png";
+let bl7 = new Image();
+bl7.src = "bl7.png";
 </script>
 
 </body>
