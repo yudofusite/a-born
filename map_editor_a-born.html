@@ -20,6 +20,14 @@
 <canvas id="c1" class="canvas1"></canvas>
 </div>
 <hr>
+<div class="mode_set">
+<ul>
+<li id="mode0">背景配置</li>
+<li id="mode1">地形配置</li>
+<li id="mode2">自由配置</li>
+<li id="mode3">前面配置</li>
+<ul>
+</div>
 <canvas id="main" class="editor"></canvas>
 <button id="cls">消去</button>
 <button id="edtb">描画</button><br>
@@ -55,7 +63,9 @@ let c1f =c1.getContext("2d");
 let plvd = document.getElementById("prev_d");
 
 setInterval(function() {
-plvd.value = mapdate[nmip];
+	if (edit_mode == 1) {
+	plvd.value = mapdate[nmip];
+	};
 c1f.clearRect(0, 0, 1000, 500);
 c1f.fillStyle = "#bbbbbb";
 	for (let ie = 0; ie < 13; ie++) {
@@ -73,7 +83,6 @@ c1f.fillRect(tate_n * 8, (yoko_n - 1) * 8, 6, 6);
 let cls_but = document.getElementById("cls");
 cls_but.addEventListener("click",function() {
 mapdate[nmip] = ["-"];
-console.log(mapdate);
 });
 let edtb = document.getElementById("edtb");
 edtb.addEventListener("click",function() {
@@ -85,9 +94,17 @@ mapdate[nmip] = [];
 	console.log("00");
 });
 
-let mapdate = [];
+let mapdate = [];			//背面配置
 for (let md1 = 0; md1 < 1105; md1++) {
 mapdate.push(["-"]);
+};
+let f_mapdate = [];			//自由配置
+for (let md1 = 0; md1 < 1105; md1++) {
+f_mapdate.push([]);
+};
+let n_mapdate = [];			//前面配置
+for (let md1 = 0; md1 < 1105; md1++) {
+n_mapdate.push([]);
 };
 
 let main = document.getElementById("main");
@@ -132,6 +149,8 @@ if (mapdate[nmip] == "-")  {
 	};
 } else {
 edit_you = 0;
+
+	if (edit_mode == 1) {
 	for (let ie4 = 0; ie4 < 25; ie4++) {
 		for (let ie5 = 0; ie5 < 50; ie5++) {
 
@@ -154,6 +173,7 @@ edit_you = 0;
 		edit_you++;
 		};
 	};
+	};	//ifとじ
 };
 
 hante_x = 0;
@@ -230,42 +250,42 @@ com = document.getElementById("command").value;		//コマンド
 });
 
 function block_edit(blknum, bex, bey) {
-			if (blknum == 1) {
-			mainf.drawImage(bl1, bex * 20, bey * 20, 20, 20);
-			};
-			if (blknum == 2) {
-			mainf.drawImage(bl2, bex * 20, bey * 20, 20, 20);
-			};
-			if (blknum == 3) {
-			mainf.drawImage(bl3, bex * 20, bey * 20, 20, 20);
-			};
-			if (blknum == 4) {
-			mainf.drawImage(bl4, bex * 20, bey * 20, 20, 20);
-			};
-			if (blknum == 5) {
-			mainf.drawImage(bl5, bex * 20, bey * 20, 20, 20);
-			};
-			if (blknum == 6) {
-			mainf.drawImage(bl6, bex * 20, bey * 20, 20, 20);
-			};
-			if (blknum == 7) {
-			mainf.drawImage(bl7, bex * 20, bey * 20, 20, 20);
+			if (blknum <= 10) {
+			mainf.drawImage(eval("bl" + blknum), bex * 20, bey * 20, 20, 20);
 			};
 };
 
 let com = document.getElementById("command").value;
 
 addEventListener("keyup",function(xyk) {
-if (xyk.key == "x") {
+if (xyk.key == "x") {		//左右反転
 	if (com != "x" || com != "X") {
 	com = "x";
 	document.getElementById("command").value = "x";
 	};
 }	
-if (xyk.key == "c" || xyk.key == "C" && com != "") {
+if (xyk.key == "c" || xyk.key == "C" && com != "") {	//コマンドなし
 	com = "";
 	document.getElementById("command").value = "";
 	};
+});
+
+let edit_mode = 1;
+let mode0b = document.getElementById("mode0");
+mode0b.addEventListener("click",function() {
+edit_mode = 0;
+});
+let mode1b = document.getElementById("mode1");
+mode1b.addEventListener("click",function() {
+edit_mode = 1;
+});
+let mode2b = document.getElementById("mode2");
+mode2b.addEventListener("click",function() {
+edit_mode = 2;
+});
+let mode3b = document.getElementById("mode3");
+mode3b.addEventListener("click",function() {
+edit_mode = 3;
 });
 
 //img loading
@@ -283,6 +303,12 @@ let bl6 = new Image();
 bl6.src = "bl6.png";
 let bl7 = new Image();
 bl7.src = "bl7.png";
+let bl8 = new Image();
+bl8.src = "bl8.png";
+let bl9 = new Image();
+bl9.src = "bl9.png";
+let bl10= new Image();
+bl10.src = "bl10.png";
 </script>
 
 </body>
